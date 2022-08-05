@@ -10,13 +10,19 @@ RSpec.describe Enigma do
   end
 
   it 'has a character set' do
-    expect(@enigma.character_Set).to eq(("a".."z").to_a << " "))
+    expect(@enigma.character_set).to all(be_a(String))
+    expect(@enigma.character_set.length).to eq(27)
   end
 
   it 'can get a random key' do
     expect(@enigma.rand_key).to be_a String
     expect(@enigma.rand_key.length).to eq(5)
-    expect(0..99999).to cover(@enigma.rand_key.to_int)
+    expect(0..99999).to cover(@enigma.rand_key.to_i)
+    require "pry"; binding.pry
+  end
+
+  it 'can get todays date' do
+
   end
 
   it 'calculates shifts' do
