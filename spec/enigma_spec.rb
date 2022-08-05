@@ -9,6 +9,25 @@ RSpec.describe Enigma do
     expect(@enigma).to be_an Enigma
   end
 
+  it 'has a character set' do
+    expect(@enigma.character_Set).to eq(("a".."z").to_a << " "))
+  end
+
+  it 'can get a random key' do
+    expect(@enigma.rand_key).to be_a String
+    expect(@enigma.rand_key.length).to eq(5)
+    expect(0..99999).to cover(@enigma.rand_key.to_int)
+  end
+
+  it 'calculates shifts' do
+    expect(@enigma.shifts("02715", "040895")).to eq(
+      { A: 3,
+        B: 27,
+        C: 73,
+        D: 20 }
+    )
+  end
+
   it 'encrypts a message with a key and date' do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
     {
