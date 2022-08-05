@@ -21,7 +21,7 @@ RSpec.describe Enigma do
   end
 
   it 'can get todays date' do
-    allow(Date).to receive(:today).and_return Date.new(1995,04,8)
+    allow(Date).to receive(:today).and_return Date.new(1995,8,4)
     expect(@enigma.date_today).to eq("040895")
   end
 

@@ -11,4 +11,8 @@ class Enigma
     rand(99999).to_s.rjust(5, '0')
   end
 
+  def date_today
+    Date.today.strftime("%d%m%y")
+  end
+
 end
