@@ -25,7 +25,7 @@ RSpec.describe Enigma do
     expect(@enigma.date_today).to eq("040895")
   end
 
-  xit 'calculates shifts' do
+  it 'calculates shifts' do
     expect(@enigma.shifts("02715", "040895")).to eq(
       { A: 3,
         B: 27,

@@ -1,10 +1,9 @@
 require 'date'
 
 class Enigma
-  attr_reader :character_set
 
-  def initialize()
-    @character_set = ("a".."z").to_a << " "
+  def character_set
+    ("a".."z").to_a << " "
   end
 
   def rand_key
@@ -13,6 +12,15 @@ class Enigma
 
   def date_today
     Date.today.strftime("%d%m%y")
+  end
+
+  def shifts(key = rand_key, date = date_today)
+    offset = (date.to_i * date.to_i).to_s[-4..-1]
+    separate_keys = {
+      A: key[0..1].to_i + offset[0].to_i,
+      B: key[1..2].to_i + offset[1].to_i,
+      C: key[2..3].to_i + offset[2].to_i,
+      D: key[3..4].to_i + offset[3].to_i}
   end
 
 end
