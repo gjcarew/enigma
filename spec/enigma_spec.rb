@@ -34,7 +34,7 @@ RSpec.describe Enigma do
     )
   end
 
-  xit 'encrypts a message with a key and date' do
+  it 'encrypts a message with a key and date' do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
     {
       encryption: "keder ohulw",
