@@ -14,7 +14,7 @@ class Enigma
     Date.today.strftime("%d%m%y")
   end
 
-  def shifts(key = rand_key, date = date_today)
+  def shifts(key, date)
     offset = (date.to_i * date.to_i).to_s[-4..-1]
     {
       A: key[0..1].to_i + offset[0].to_i,
@@ -24,19 +24,8 @@ class Enigma
     }
   end
 
-  def encrypt(message, key, date)
-    encrypted_a = []
-    message.chars.each_slice(4) do |a, b, c, d|
-      encrypted_a << scramble(key, date, :A, a)
-      encrypted_a << scramble(key, date, :B, b)
-      encrypted_a << scramble(key, date, :C, c)
-      encrypted_a << scramble(key, date, :D, d)
-    end
-    {
-      encryption: encrypted_a.join,
-      key: key,
-      date: date
-    }
+  def encrypt(message, key = rand_key, date = date_today)
+    Encryption.new.encrypt(message, key, date)
   end
 
   def scramble(key, date, shift_pos, slice_pos)
@@ -46,5 +35,18 @@ class Enigma
       rotated = character_set.rotate(shift_n)
       rotated[slice_index]
     end
+  end
+
+  def add_back_specials(message, encrypted_array)
+    message.downcase.chars.select.each_with_index do |char, index|
+      if !character_set.include?(char)
+        encrypted_array.insert(index, char)
+      end
+    end
+    encrypted_array
+  end
+
+  def strip_specials(message)
+    message.downcase.chars.select {|char| character_set.include?(char)}
   end
 end

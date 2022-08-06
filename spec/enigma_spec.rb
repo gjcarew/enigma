@@ -1,4 +1,5 @@
 require './lib/enigma'
+require './lib/encryption'
 
 RSpec.describe Enigma do
   before :each do
@@ -52,7 +53,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'encrypts a message with just a key' do
+  it 'encrypts a message with just a key' do
     allow(@enigma).to receive(:date_today).and_return("040895")
     expect(@enigma.encrypt("hello world", "02715")).to eq(
     {
@@ -72,7 +73,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'encrypts a message with a random key and todays date' do
+  it 'encrypts a message with a random key and todays date' do
     allow(@enigma).to receive(:date_today).and_return("040895")
     allow(@enigma).to receive(:rand_key).and_return("02715")
     expect(@enigma.encrypt("hello world")).to eq(
@@ -81,6 +82,21 @@ RSpec.describe Enigma do
       key: "02715",
       date: "040895"
     })
+  end
+
+  it 'removes special characters from a message' do
+    expect(@enigma.strip_specials("Hello! World.")).to eq(
+      ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"])
+  end
+
+  it 'adds special characters back to the message after encryption' do
+    @encryption = Encryption.new
+    message = "Hello! World."
+    stripped = @enigma.strip_specials(message)
+    encrypted_a = @encryption.encrypted_array(stripped, "02715", "040895")
+    expect(@enigma.add_back_specials(message, encrypted_a)).to eq(
+      ["k", "e", "d","e", "r", "!", " ", "o", "h", "u", "l", "w", "."]
+    )
   end
 
 end
