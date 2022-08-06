@@ -1,5 +1,5 @@
 require './lib/encryption'
-require './lib/'
+require './lib/enigma'
 
 RSpec.describe Encryption do
   before :each do
