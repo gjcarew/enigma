@@ -1,22 +1,18 @@
 require './lib/encryption'
+require './lib/'
 
 RSpec.describe Encryption do
   before :each do
-    @encryption = Encryption.new("hello world", "02715", "040895")
+    @enigma = Enigma.new
   end
 
-  it "exists" do
-    expect(@encryption).to be_an Encryption
-  end
-
-  it 'has attributes' do
-    expect(@encryption.message). to eq("hello world")
-    expect(@encryption.key).to eq("02715")
-    expect(@encryption.date).to eq("040895")
+  it 'exists' do
+    encryption = Encryption.new
+    expect(encryption).to be_an Encryption
   end
 
   it 'encrypts a message with a key and date' do
-    expect(@encryption.encrypt("hello world", "02715", "040895")).to eq(
+    expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
     {
       encryption: "keder ohulw",
       key: "02715",
@@ -25,8 +21,8 @@ RSpec.describe Encryption do
   end
 
   it 'encrypts a message with just a key' do
-    allow(@encryption).to receive(:date_today).and_return("040895")
-    expect(@encryption.encrypt("hello world", "02715")).to eq(
+    allow(@enigma).to receive(:date_today).and_return("040895")
+    expect(@enigma.encrypt("hello world", "02715")).to eq(
     {
       encryption: "keder ohulw",
       key: "02715",

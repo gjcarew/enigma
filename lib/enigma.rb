@@ -1,6 +1,4 @@
 require 'date'
-require 'encrypt'
-require 'decrypt'
 
 class Enigma
 
@@ -27,18 +25,7 @@ class Enigma
   end
 
   def encrypt(message, key = rand_key, date = date_today)
-    encrypted_a = []
-    message.chars.each_slice(4) do |a, b, c, d|
-      encrypted_a << scramble(key, date, :A, a)
-      encrypted_a << scramble(key, date, :B, b)
-      encrypted_a << scramble(key, date, :C, c)
-      encrypted_a << scramble(key, date, :D, d)
-    end
-    {
-      encryption: encrypted_a.join,
-      key: key,
-      date: date
-    }
+    Encryption.new.encrypt(message, key, date)
   end
 
   def scramble(key, date, shift_pos, slice_pos)
