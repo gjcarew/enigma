@@ -84,4 +84,19 @@ RSpec.describe Enigma do
     })
   end
 
+  it 'removes special characters from a message' do
+    expect(@enigma.strip_specials("Hello! World.")).to eq(
+      ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"])
+  end
+
+  it 'adds special characters back to the message after encryption' do
+    @encryption = Encryption.new
+    message = "Hello! World."
+    stripped = @enigma.strip_specials(message)
+    encrypted_a = @encryption.encrypted_array(stripped, "02715", "040895")
+    expect(@enigma.add_back_specials(message, encrypted_a)).to eq(
+      ["k", "e", "d","e", "r", "!", " ", "o", "h", "u", "l", "w", "."]
+    )
+  end
+
 end
