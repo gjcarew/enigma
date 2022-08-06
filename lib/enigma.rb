@@ -1,4 +1,6 @@
 require 'date'
+require 'encrypt'
+require 'decrypt'
 
 class Enigma
 
@@ -14,7 +16,7 @@ class Enigma
     Date.today.strftime("%d%m%y")
   end
 
-  def shifts(key = rand_key, date = date_today)
+  def shifts(key, date)
     offset = (date.to_i * date.to_i).to_s[-4..-1]
     {
       A: key[0..1].to_i + offset[0].to_i,
@@ -24,7 +26,7 @@ class Enigma
     }
   end
 
-  def encrypt(message, key, date)
+  def encrypt(message, key = rand_key, date = date_today)
     encrypted_a = []
     message.chars.each_slice(4) do |a, b, c, d|
       encrypted_a << scramble(key, date, :A, a)

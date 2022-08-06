@@ -52,7 +52,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'encrypts a message with just a key' do
+  it 'encrypts a message with just a key' do
     allow(@enigma).to receive(:date_today).and_return("040895")
     expect(@enigma.encrypt("hello world", "02715")).to eq(
     {
@@ -72,7 +72,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'encrypts a message with a random key and todays date' do
+  it 'encrypts a message with a random key and todays date' do
     allow(@enigma).to receive(:date_today).and_return("040895")
     allow(@enigma).to receive(:rand_key).and_return("02715")
     expect(@enigma.encrypt("hello world")).to eq(
