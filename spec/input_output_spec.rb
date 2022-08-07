@@ -10,6 +10,16 @@ RSpec.describe InputOutput do
     expect(@inputoutput).to be_an InputOutput
   end
 
+  it 'creates an encryption or decryption object' do
+    expect(@inputoutput.enigma).to be_a(Encryption)
+    io2 = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895"], "decrypt")
+    expect(io2.enigma).to be_a(Decryption)
+  end
+
+  it 'reads and downcases a message' do
+    expect(@inputoutput.message("message.txt")).to be_a String
+  end
+
   it 'validates arguments (integration test)' do
     expect(@inputoutput.validate(["message.txt", "encrypted.txt", "02715", "040895"])).to be true
     expect(@inputoutput.validate(["message.csv", "encrypted.txt", "02715", "040895"])).to be false

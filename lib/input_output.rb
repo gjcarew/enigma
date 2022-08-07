@@ -1,13 +1,40 @@
+require 'encryption.rb'
+require 'decryption.rb'
+
 class InputOutput
+  attr_reader :@enigma
 
   def initialize(args, what_to_do)
     @args = args
-    @what_to_do = what_to_do
+    @enigma = new_enigma(what_to_do)
     @key = rand_key
     @date = date_today
   end
 
-  
+  def new_enigma(what_to_do)
+    check_key_and_date
+    if validate(@args) && what_to_do == "encrypt"
+      enigma = Encryption.new(message(@args[0]), @key, @date)
+    elsif validate(@args) && what_to_do == "decrypt")
+      enigma = Decryption.new(message(@args[0]), @key, @date)
+    else
+      puts "Argument error"
+    end
+    enigma
+  end
+
+  def message(filepath)
+    File.open(filepath).read.downcase
+  end
+
+  def check_key_and_date
+    if @args[2].length == 5 && @args[3] != nil
+      @key = @args[2]
+      @date = @args[3]
+    elsif @args[2].length == 6
+      @date = @args[2]
+    end
+  end
 
   def validate(args)
     validate_filepath(args) &&
@@ -59,6 +86,5 @@ class InputOutput
   def date_today
     Date.today.strftime("%d%m%y")
   end
-
 
 end

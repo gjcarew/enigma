@@ -1,1 +1,1 @@
-InputOutput.new(ARGV, decrypt)
+InputOutput.new(ARGV, "decrypt")
