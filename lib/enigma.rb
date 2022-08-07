@@ -2,6 +2,14 @@ require 'date'
 
 class Enigma
 
+  def encrypt(message, key = rand_key, date = date_today)
+    Encryption.new.encrypt(message, key, date)
+  end
+
+  def decrypt(message, key, date = date_today)
+    Decryption.new.decrypt(message, key, date)
+  end
+
   def character_set
     ("a".."z").to_a << " "
   end
@@ -22,14 +30,6 @@ class Enigma
       C: key[2..3].to_i + offset[2].to_i,
       D: key[3..4].to_i + offset[3].to_i
     }
-  end
-
-  def encrypt(message, key = rand_key, date = date_today)
-    Encryption.new.encrypt(message, key, date)
-  end
-
-  def decrypt(message, key, date = date_today)
-    Decryption.new.decrypt(message, key, date)
   end
 
   def scramble_array(message, key, date, direction)
@@ -60,6 +60,10 @@ class Enigma
     rotated
   end
 
+  def strip_specials(message)
+    message.downcase.chars.select {|char| character_set.include?(char)}
+  end
+
   def add_back_specials(message, encrypted_array)
     message.downcase.chars.select.each_with_index do |char, index|
       if !character_set.include?(char)
@@ -69,7 +73,4 @@ class Enigma
     encrypted_array
   end
 
-  def strip_specials(message)
-    message.downcase.chars.select {|char| character_set.include?(char)}
-  end
 end
