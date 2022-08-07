@@ -1,0 +1,1 @@
+InputOutput.new(ARGV, encrypt)
