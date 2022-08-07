@@ -2,7 +2,6 @@ require 'encryption.rb'
 require 'decryption.rb'
 
 class InputOutput
-  attr_reader :@enigma
 
   def initialize(args, what_to_do)
     @args = args
@@ -14,13 +13,14 @@ class InputOutput
   def new_enigma(what_to_do)
     check_key_and_date
     if validate(@args) && what_to_do == "encrypt"
-      enigma = Encryption.new(message(@args[0]), @key, @date)
-    elsif validate(@args) && what_to_do == "decrypt")
-      enigma = Decryption.new(message(@args[0]), @key, @date)
+      enigma = Encryption.new.encrypt(message(@args[0]), @key, @date)
+    elsif validate(@args) && what_to_do == "decrypt"
+      enigma = Decryption.new.encrypt(message(@args[0]), @key, @date)
     else
       puts "Argument error"
     end
     enigma
+    require "pry"; binding.pry
   end
 
   def message(filepath)
