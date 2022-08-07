@@ -10,7 +10,7 @@ RSpec.describe Decryption do
     expect(@decryption).to be_a Decryption
   end
 
-  xit 'decrypts a message with a key and date' do
+  it 'decrypts a message with a key and date' do
     expect(@decryption.decrypt("keder ohulw", "02715", "040895")).to eq(
     {
       decryption: "hello world",
