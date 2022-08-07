@@ -7,15 +7,13 @@ class InputOutput
     @date = date_today
   end
 
+  
+
   def validate(args)
-    if validate_filepath(args) &&
-      validate_num_args(args) &&
-      validate_key_date_numeric?(args) &&
-      validate_key_date_length(args)
-      true
-    else
-      false
-    end
+    validate_filepath(args) &&
+    validate_num_args(args) &&
+    validate_key_date_numeric?(args) &&
+    validate_key_date_length(args)
   end
 
   def validate_filepath(args)

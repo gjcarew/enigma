@@ -10,6 +10,11 @@ RSpec.describe InputOutput do
     expect(@inputoutput).to be_an InputOutput
   end
 
+  it 'validates arguments (integration test)' do
+    expect(@inputoutput.validate(["message.txt", "encrypted.txt", "02715", "040895"])).to be true
+    expect(@inputoutput.validate(["message.csv", "encrypted.txt", "02715", "040895"])).to be false
+  end
+
   it 'validates filepaths' do
     expect(@inputoutput.validate_filepath(["message.txt", "encrypted.txt", "02715", "040895"])).to be true
     expect(@inputoutput.validate_filepath(["message.csv", "encrypted.txt", "02715", "040895"])).to be false
