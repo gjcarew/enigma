@@ -15,10 +15,7 @@ RSpec.describe Enigma do
     expect(@enigma.character_set.length).to eq(27)
   end
 
-  it 'can get todays date' do
-    allow(Date).to receive(:today).and_return Date.new(1995,8,4)
-    expect(@enigma.date_today).to eq("040895")
-  end
+
 
   it 'calculates shifts' do
     expect(@enigma.shifts("02715", "040895")).to eq(

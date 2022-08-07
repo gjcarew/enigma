@@ -1,4 +1,5 @@
-required './lib/input_output'
+require './lib/input_output'
+
 RSpec.describe InputOutput do
 
   before :each do
@@ -9,11 +10,18 @@ RSpec.describe InputOutput do
     expect(@inputoutput).to be_an InputOutput
   end
 
-  it 'parses i/o files to make sure they are .txt files' do
+  it 'validates arguments' do
     expect(@inputoutput.validate).to be true
-    inputoutput1 = InputOutput.new(["message.csv", "encrypted.txt", "02715", "040895"], "encrypt"))
+    inputoutput1 = InputOutput.new(["message.csv", "encrypted.txt", "02715", "040895"], "encrypt")
     expect(inputoutput1.validate).to be false
+    inputoutput2 = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895", "90210"], "encrypt")
+    expect(inputoutput2.validate).to be false
+    inputoutput3 = InputOutput.new(["message.txt", "encrypted.txt", "02T15", "040895"], "encrypt")
+    expect(inputoutput3.validate).to be false
+    inputoutput4 = InputOutput.new(["message.txt", "encrypted.txt", "0271569", "040895"], "encrypt")
+    expect(inputoutput4.validate).to be false
   end
+
 
   it 'can get a random key' do
     expect(@inputoutput.rand_key).to be_a String
