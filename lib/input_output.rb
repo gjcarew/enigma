@@ -4,7 +4,7 @@ class InputOutput
     @args = args
     @what_to_do = what_to_do
     @key = rand_key
-    @date = nil
+    @date = date_today
   end
 
   def validate(args)
@@ -37,23 +37,29 @@ class InputOutput
   end
 
   def validate_key_date_numeric?(args)
+    result = []
     args[2..3].each do |arg|
-      if arg != nil && !arg.match?(/[[:digit:]]/)
+      if arg != nil && arg.match?(/\D/)
         puts "Please make sure your key and date only contain numbers"
-        false
+        result << false
       else
-        true
+        result << true
       end
     end
+    result.all?{ |r| r == true}
   end
 
   def validate_key_date_length(args)
-    if args[2] != nil && [5..6].include?(args[2].length)
+    result = []
+    args[2..3].each do |arg|
+      if arg != nil && ![5, 6].include?(arg.length)
       puts "Your key should be 5 digits and your date should be in DDMMYY format"
-      false
-    else
-      true
+        result << false
+      else
+        result << true
+      end
     end
+    result.all?{ |r| r == true}
   end
 
   def rand_key
