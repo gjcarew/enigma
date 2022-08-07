@@ -44,7 +44,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'decrypts a message with a key and date' do
+  it 'decrypts a message with a key and date' do
     expect(@enigma.decrypt("keder ohulw", "02715", "040895")).to eq(
     {
       decryption: "hello world",
@@ -63,7 +63,7 @@ RSpec.describe Enigma do
     })
   end
 
-  xit 'decrypts a message with a key' do
+  it 'decrypts a message with a key' do
     allow(@enigma).to receive(:date_today).and_return("040895")
     expect(@enigma.decrypt("keder ohulw", "02715")).to eq(
     {
@@ -93,7 +93,7 @@ RSpec.describe Enigma do
     @encryption = Encryption.new
     message = "Hello! World."
     stripped = @enigma.strip_specials(message)
-    encrypted_a = @encryption.encrypted_array(stripped, "02715", "040895")
+    encrypted_a = @enigma.scramble_array(stripped, "02715", "040895", "en")
     expect(@enigma.add_back_specials(message, encrypted_a)).to eq(
       ["k", "e", "d","e", "r", "!", " ", "o", "h", "u", "l", "w", "."]
     )

@@ -4,7 +4,8 @@ class Encryption < Enigma
 
   def encrypt(message, key, date)
     stripped = strip_specials(message)
-    encryption = add_back_specials(message, encrypted_array(stripped, key, date))
+    encrypted_array = scramble_array(stripped, key, date, "en")
+    encryption = add_back_specials(message, encrypted_array)
     {
       encryption: encryption.join,
       key: key,
@@ -23,13 +24,13 @@ class Encryption < Enigma
   #   encrypted_a.compact
   # end
 
-  def scramble(key, date, shift_pos, slice_pos)
-    if slice_pos.nil? == false
-      slice_index = character_set.find_index(slice_pos)
-      shift_n = shifts(key, date)[shift_pos]
-      rotated = character_set.rotate(shift_n)
-      rotated[slice_index]
-    end
-  end
+  # def scramble(key, date, shift_pos, slice_pos)
+  #   if slice_pos.nil? == false
+  #     slice_index = character_set.find_index(slice_pos)
+  #     shift_n = shifts(key, date)[shift_pos]
+  #     rotated = character_set.rotate(shift_n)
+  #     rotated[slice_index]
+  #   end
+  # end
 
 end

@@ -32,15 +32,32 @@ class Enigma
     Decryption.new.decrypt(message, key, date)
   end
 
-  def encrypted_array(message, key, date)
-    encrypted_a = []
+  def scramble_array(message, key, date, direction)
+    scrambled_a = []
     message.each_slice(4) do |a, b, c, d|
-      encrypted_a << scramble(key, date, :A, a)
-      encrypted_a << scramble(key, date, :B, b)
-      encrypted_a << scramble(key, date, :C, c)
-      encrypted_a << scramble(key, date, :D, d)
+      scrambled_a << scramble(key, date, :A, a, direction)
+      scrambled_a << scramble(key, date, :B, b, direction)
+      scrambled_a << scramble(key, date, :C, c, direction)
+      scrambled_a << scramble(key, date, :D, d, direction)
     end
-    encrypted_a.compact
+    scrambled_a.compact
+  end
+
+  def scramble(key, date, shift_pos, slice_pos, direction)
+    if slice_pos.nil? == false
+      slice_index = character_set.find_index(slice_pos)
+      shift_n = shifts(key, date)[shift_pos]
+      de_or_en(shift_n, direction)[slice_index]
+    end
+  end
+
+  def de_or_en(shift_n, direction)
+    if direction == "de"
+      rotated = character_set.rotate(-shift_n)
+    else
+      rotated = character_set.rotate(shift_n)
+    end
+    rotated
   end
 
   def add_back_specials(message, encrypted_array)
