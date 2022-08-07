@@ -37,29 +37,21 @@ class InputOutput
   end
 
   def validate_key_date_numeric?(args)
-    result = []
-    args[2..3].each do |arg|
-      if arg != nil && arg.match?(/\D/)
-        puts "Please make sure your key and date only contain numbers"
-        result << false
-      else
-        result << true
-      end
+    if !args[2..3].all?{ |arg| arg != nil && !arg.match?(/\D/)}
+      puts "Please make sure your key and date are all numeric"
+      false
+    else
+      true
     end
-    result.all?{ |r| r == true}
   end
 
   def validate_key_date_length(args)
-    result = []
-    args[2..3].each do |arg|
-      if arg != nil && ![5, 6].include?(arg.length)
-      puts "Your key should be 5 digits and your date should be in DDMMYY format"
-        result << false
-      else
-        result << true
-      end
+    if !args[2..3].all?{ |arg| arg != nil && [5, 6].include?(arg.length)}
+      puts "Please make sure your key is 5 digits and you date is formatted DDMMYY"
+      false
+    else
+      true
     end
-    result.all?{ |r| r == true}
   end
 
   def rand_key
