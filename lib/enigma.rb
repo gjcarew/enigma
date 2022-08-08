@@ -14,14 +14,6 @@ class Enigma
     ("a".."z").to_a << " "
   end
 
-  def rand_key
-    rand(99999).to_s.rjust(5, '0')
-  end
-
-  def date_today
-    Date.today.strftime("%d%m%y")
-  end
-
   def shifts(key, date)
     offset = (date.to_i * date.to_i).to_s[-4..-1]
     {

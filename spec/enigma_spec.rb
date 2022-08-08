@@ -15,16 +15,7 @@ RSpec.describe Enigma do
     expect(@enigma.character_set.length).to eq(27)
   end
 
-  it 'can get a random key' do
-    expect(@enigma.rand_key).to be_a String
-    expect(@enigma.rand_key.length).to eq(5)
-    expect(0..99999).to cover(@enigma.rand_key.to_i)
-  end
 
-  it 'can get todays date' do
-    allow(Date).to receive(:today).and_return Date.new(1995,8,4)
-    expect(@enigma.date_today).to eq("040895")
-  end
 
   it 'calculates shifts' do
     expect(@enigma.shifts("02715", "040895")).to eq(

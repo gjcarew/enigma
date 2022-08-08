@@ -7,7 +7,7 @@ RSpec.describe Encryption do
   end
 
   it 'exists' do
-    expect(@encryption).to be_an Encryption
+    expect(@encryption).to be_an(Encryption)
   end
 
   it 'encrypts a message with a key and date' do
