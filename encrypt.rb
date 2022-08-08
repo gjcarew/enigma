@@ -1,2 +1,3 @@
 require_relative 'lib/input_output'
-InputOutput.new(ARGV, "encrypt")
+
+Validate.new.validate(ARGV, 'encrypt')
