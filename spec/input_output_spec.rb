@@ -10,12 +10,6 @@ RSpec.describe InputOutput do
     expect(@inputoutput).to be_an InputOutput
   end
 
-  it 'creates an encryption or decryption object' do
-    expect(@inputoutput.new_enigma(encrypt)).to be_a(Encryption)
-    io2 = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895"], "decrypt")
-    expect(io2.new_enigma(encrypt)).to be_a(Decryption)
-  end
-
   it 'reads and downcases a message' do
     expect(@inputoutput.message("message.txt")).to be_a String
   end
