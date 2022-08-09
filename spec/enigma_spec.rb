@@ -1,6 +1,4 @@
 require './lib/enigma'
-require './lib/encryption'
-require './lib/input_output'
 
 RSpec.describe Enigma do
   before :each do
@@ -80,7 +78,6 @@ RSpec.describe Enigma do
   end
 
   it 'adds special characters back to the message after encryption' do
-    @encryption = Encryption.new
     message = "Hello! World."
     stripped = @enigma.strip_specials(message)
     encrypted_a = @enigma.scramble_array(stripped, "02715", "040895", "en")
@@ -88,5 +85,4 @@ RSpec.describe Enigma do
       ["k", "e", "d","e", "r", "!", " ", "o", "h", "u", "l", "w", "."]
     )
   end
-
 end

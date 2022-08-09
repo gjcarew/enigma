@@ -61,5 +61,4 @@ RSpec.describe InputOutput do
       date: "040895"
     })
   end
-
 end
