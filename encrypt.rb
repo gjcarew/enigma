@@ -1,3 +1,3 @@
-require_relative 'lib/input_output'
+require_relative 'lib/validate'
 
 Validate.new.validate(ARGV, 'encrypt')

@@ -53,11 +53,11 @@ class Enigma
   end
 
   def strip_specials(message)
-    message.downcase.chars.select {|char| character_set.include?(char)}
+    message.chars.select {|char| character_set.include?(char)}
   end
 
   def add_back_specials(message, encrypted_array)
-    message.downcase.chars.select.each_with_index do |char, index|
+    message.chars.select.each_with_index do |char, index|
       if !character_set.include?(char)
         encrypted_array.insert(index, char)
       end

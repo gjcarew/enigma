@@ -1,7 +1,6 @@
 require_relative 'encryption'
 require_relative 'decryption'
 
-
 class InputOutput
 
   def initialize(args, what_to_do)
@@ -13,10 +12,10 @@ class InputOutput
 
   def new_enigma(what_to_do)
     check_key_and_date
-    if validate(@args) && what_to_do == "encrypt"
+    if what_to_do == "encrypt"
       @enigma = Encryption.new.encrypt(message(@args[0]), @key, @date)
       write(@enigma[:encryption])
-    elsif validate(@args) && what_to_do == "decrypt"
+    elsif what_to_do == "decrypt"
       @enigma = Decryption.new.decrypt(message(@args[0]), @key, @date)
       write(@enigma[:decryption])
     else
@@ -43,49 +42,6 @@ class InputOutput
       elsif @args[2].length == 6
         @date = @args[2]
       end
-    end
-  end
-
-  def validate(args)
-    validate_filepath(args) &&
-    validate_num_args(args) &&
-    validate_key_date_numeric?(args) &&
-    validate_key_date_length(args)
-  end
-
-  def validate_filepath(args)
-    if !args[0..1].all?{ |filepath| filepath[-4..-1] == ".txt"}
-      puts "Please make sure your filepaths are .txt files"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_num_args(args)
-    if args.length > 4 || args.length < 2
-      puts "Wrong number of arguments"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_key_date_numeric?(args)
-    if !args[2..3].all?{ |arg| arg != nil && !arg.match?(/\D/)}
-      puts "Please make sure your key and date are all numeric"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_key_date_length(args)
-    if !args[2..3].all?{ |arg| arg != nil && [5, 6].include?(arg.length)}
-      puts "Please make sure your key is 5 digits and your date is formatted 'DDMMYY'"
-      false
-    else
-      true
     end
   end
 

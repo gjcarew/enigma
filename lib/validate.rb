@@ -1,3 +1,5 @@
+require_relative 'input_output'
+
 class Validate
 
   def validate(args, what_to_do)
@@ -44,3 +46,4 @@ class Validate
       true
     end
   end
+end
