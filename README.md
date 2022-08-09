@@ -16,4 +16,4 @@ Mocks and/or stubs are used appropriately to ensure two or more of the following
 ## Version control - 4
 
 Version Control	Minimum 40 commits and 4 pull requests. All pull requests include related and logical chunks of functionality, and are named and documented to clearly communicate the purpose of the pull request. No commits include multiple pieces of functionality.
-** 41 commits, 6 PR's **
+**41 commits, 6 PR's**
