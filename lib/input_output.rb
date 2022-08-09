@@ -17,18 +17,18 @@ class InputOutput
     message = read_message(@args[0])
     if what_to_do == "encrypt"
       @enigma = Enigma.new.encrypt(message, @key, @date)
-      write(@enigma[:encryption])
     elsif what_to_do == "decrypt"
       @enigma = Enigma.new.decrypt(message, @key, @date)
-      write(@enigma[:decryption])
     else
       puts "Argument error"
       return "argument error"
     end
+    write
     @enigma
   end
 
-  def write(message)
+  def write
+    message = @enigma.values[0]
     File.write(@args[1], message)
     puts "Created '#{@args[1]}' with the key #{@key} and date #{@date}"
   end
@@ -49,5 +49,4 @@ class InputOutput
       end
     end
   end
-
 end
