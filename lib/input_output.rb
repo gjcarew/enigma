@@ -1,8 +1,9 @@
-require_relative 'encryption'
-require_relative 'decryption'
-
+require_relative 'enigma'
+require_relative 'genericable'
 
 class InputOutput
+  include Genericable
+  attr_reader :args, :key, :date, :enigma
 
   def initialize(args, what_to_do)
     @args = args
@@ -13,15 +14,18 @@ class InputOutput
 
   def new_enigma(what_to_do)
     check_key_and_date
-    if validate(@args) && what_to_do == "encrypt"
-      @enigma = Encryption.new.encrypt(message(@args[0]), @key, @date)
+    message = read_message(@args[0])
+    if what_to_do == "encrypt"
+      @enigma = Enigma.new.encrypt(message, @key, @date)
       write(@enigma[:encryption])
-    elsif validate(@args) && what_to_do == "decrypt"
-      @enigma = Decryption.new.decrypt(message(@args[0]), @key, @date)
+    elsif what_to_do == "decrypt"
+      @enigma = Enigma.new.decrypt(message, @key, @date)
       write(@enigma[:decryption])
     else
       puts "Argument error"
+      return "argument error"
     end
+    @enigma
   end
 
   def write(message)
@@ -29,7 +33,7 @@ class InputOutput
     puts "Created '#{@args[1]}' with the key #{@key} and date #{@date}"
   end
 
-  def message(filepath)
+  def read_message(filepath)
     File.read(filepath).downcase
   end
 
@@ -44,57 +48,6 @@ class InputOutput
         @date = @args[2]
       end
     end
-  end
-
-  def validate(args)
-    validate_filepath(args) &&
-    validate_num_args(args) &&
-    validate_key_date_numeric?(args) &&
-    validate_key_date_length(args)
-  end
-
-  def validate_filepath(args)
-    if !args[0..1].all?{ |filepath| filepath[-4..-1] == ".txt"}
-      puts "Please make sure your filepaths are .txt files"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_num_args(args)
-    if args.length > 4 || args.length < 2
-      puts "Wrong number of arguments"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_key_date_numeric?(args)
-    if !args[2..3].all?{ |arg| arg != nil && !arg.match?(/\D/)}
-      puts "Please make sure your key and date are all numeric"
-      false
-    else
-      true
-    end
-  end
-
-  def validate_key_date_length(args)
-    if !args[2..3].all?{ |arg| arg != nil && [5, 6].include?(arg.length)}
-      puts "Please make sure your key is 5 digits and your date is formatted 'DDMMYY'"
-      false
-    else
-      true
-    end
-  end
-
-  def rand_key
-    rand(99999).to_s.rjust(5, '0')
-  end
-
-  def date_today
-    Date.today.strftime("%d%m%y")
   end
 
 end
