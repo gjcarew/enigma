@@ -1,6 +1,8 @@
 require 'date'
+require_relative 'genericable'
 
 class Enigma
+  include Genericable
 
   def encrypt(message, key = rand_key, date = date_today)
     Encryption.new.encrypt(message, key, date)
@@ -53,11 +55,11 @@ class Enigma
   end
 
   def strip_specials(message)
-    message.chars.select {|char| character_set.include?(char)}
+    message.downcase.chars.select {|char| character_set.include?(char)}
   end
 
   def add_back_specials(message, encrypted_array)
-    message.chars.select.each_with_index do |char, index|
+    message.downcase.chars.select.each_with_index do |char, index|
       if !character_set.include?(char)
         encrypted_array.insert(index, char)
       end

@@ -4,6 +4,7 @@ RSpec.describe InputOutput do
 
   before :each do
     @inputoutput = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895"], "encrypt")
+    @decryption = InputOutput.new(["encrypted.txt", "decrypted.txt", "02715", "040895"], "decrypt")
   end
 
   it 'exists' do
@@ -11,7 +12,7 @@ RSpec.describe InputOutput do
   end
 
   it 'reads and downcases a message' do
-    expect(@inputoutput.message("message.txt")).to be_a String
+    expect(@inputoutput.read_message("message.txt")).to be_a String
   end
 
   it 'can get a random key' do
@@ -23,6 +24,26 @@ RSpec.describe InputOutput do
   it 'can get todays date' do
     allow(Date).to receive(:today).and_return Date.new(1995,8,4)
     expect(@inputoutput.date_today).to eq("040895")
+  end
+
+  it 'creates an encryption with a key and date' do
+    allow_any_instance_of(InputOutput).to receive(:read_message).and_return("hello world")
+    new_input = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895"], "encrypt")
+    expect(new_input.enigma).to eq({
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    })
+  end
+
+  it 'creates a decryption with a key and date' do
+    allow_any_instance_of(InputOutput).to receive(:read_message).and_return("keder ohulw")
+    new_input = InputOutput.new(["message.txt", "encrypted.txt", "02715", "040895"], "decrypt")
+    expect(new_input.enigma).to eq({
+      decryption: "hello world",
+      key: "02715",
+      date: "040895"
+    })
   end
 
 end

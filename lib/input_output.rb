@@ -1,7 +1,10 @@
 require_relative 'encryption'
 require_relative 'decryption'
+require_relative 'genericable'
 
 class InputOutput
+  include Genericable
+  attr_reader :args, :key, :date, :enigma
 
   def initialize(args, what_to_do)
     @args = args
@@ -12,15 +15,17 @@ class InputOutput
 
   def new_enigma(what_to_do)
     check_key_and_date
+    message = read_message(@args[0])
     if what_to_do == "encrypt"
-      @enigma = Encryption.new.encrypt(message(@args[0]), @key, @date)
+      @enigma = Encryption.new.encrypt(message, @key, @date)
       write(@enigma[:encryption])
     elsif what_to_do == "decrypt"
-      @enigma = Decryption.new.decrypt(message(@args[0]), @key, @date)
+      @enigma = Decryption.new.decrypt(message, @key, @date)
       write(@enigma[:decryption])
     else
       puts "Argument error"
     end
+    @enigma
   end
 
   def write(message)
@@ -28,7 +33,7 @@ class InputOutput
     puts "Created '#{@args[1]}' with the key #{@key} and date #{@date}"
   end
 
-  def message(filepath)
+  def read_message(filepath)
     File.read(filepath).downcase
   end
 

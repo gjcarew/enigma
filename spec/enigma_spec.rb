@@ -1,5 +1,6 @@
 require './lib/enigma'
 require './lib/encryption'
+require './lib/input_output'
 
 RSpec.describe Enigma do
   before :each do
@@ -14,8 +15,6 @@ RSpec.describe Enigma do
     expect(@enigma.character_set).to all(be_a(String))
     expect(@enigma.character_set.length).to eq(27)
   end
-
-
 
   it 'calculates shifts' do
     expect(@enigma.shifts("02715", "040895")).to eq(
@@ -44,39 +43,8 @@ RSpec.describe Enigma do
     })
   end
 
-  it 'encrypts a message with just a key' do
-    allow(@enigma).to receive(:date_today).and_return("040895")
-    expect(@enigma.encrypt("hello world", "02715")).to eq(
-    {
-      encryption: "keder ohulw",
-      key: "02715",
-      date: "040895"
-    })
-  end
-
-  it 'decrypts a message with a key' do
-    allow(@enigma).to receive(:date_today).and_return("040895")
-    expect(@enigma.decrypt("keder ohulw", "02715")).to eq(
-    {
-      decryption: "hello world",
-      key: "02715",
-      date: "040895"
-    })
-  end
-
-  it 'encrypts a message with a random key and todays date' do
-    allow(@enigma).to receive(:date_today).and_return("040895")
-    allow(@enigma).to receive(:rand_key).and_return("02715")
-    expect(@enigma.encrypt("hello world")).to eq(
-    {
-      encryption: "keder ohulw",
-      key: "02715",
-      date: "040895"
-    })
-  end
-
   it 'removes special characters from a message' do
-    expect(@enigma.strip_specials("Hello! World.")).to eq(
+    expect(@enigma.strip_specials("hello! world.")).to eq(
       ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"])
   end
 
