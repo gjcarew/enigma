@@ -43,6 +43,37 @@ RSpec.describe Enigma do
     })
   end
 
+  it 'creates an encryption with no key or date' do
+    allow(@enigma).to receive(:date_today).and_return("040895")
+    allow(@enigma).to receive(:rand_key).and_return("02715")
+    expect(@enigma.encrypt("hello world")).to eq(
+    {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    })
+  end
+
+  it 'creates an encryption with just a key' do
+    allow(@enigma).to receive(:date_today).and_return("040895")
+    expect(@enigma.encrypt("hello world", "02715")).to eq(
+    {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    })
+  end
+
+  it 'creates a decryption with just a key and todays date' do
+    allow(@enigma).to receive(:date_today).and_return("040895")
+    expect(@enigma.decrypt("keder ohulw", "02715")).to eq(
+    {
+      decryption: "hello world",
+      key: "02715",
+      date: "040895"
+    })
+  end
+
   it 'removes special characters from a message' do
     expect(@enigma.strip_specials("hello! world.")).to eq(
       ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"])

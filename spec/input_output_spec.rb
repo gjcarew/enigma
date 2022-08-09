@@ -46,4 +46,20 @@ RSpec.describe InputOutput do
     })
   end
 
+  it 'returns an argument error if there has been a validation failure' do
+    new_input = InputOutput.new(["message.txt", "encrypted.txt", "02715"], "something else")
+    expect(new_input.enigma).to eq("argument error")
+  end
+
+  it '** bonus ** creates a decryption with just a date' do
+    allow_any_instance_of(InputOutput).to receive(:read_message).and_return("hello world")
+    allow_any_instance_of(InputOutput).to receive(:rand_key).and_return("02715")
+    new_input = InputOutput.new(["message.txt", "encrypted.txt", "040895"], "encrypt")
+    expect(new_input.enigma).to eq({
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    })
+  end
+
 end

@@ -5,11 +5,25 @@ class Enigma
   include Genericable
 
   def encrypt(message, key = rand_key, date = date_today)
-    Encryption.new.encrypt(message, key, date)
+    stripped = strip_specials(message)
+    encrypted_array = scramble_array(stripped, key, date, "en")
+    encryption = add_back_specials(message, encrypted_array)
+    {
+      encryption: encryption.join,
+      key: key,
+      date: date
+    }
   end
 
-  def decrypt(message, key, date = date_today)
-    Decryption.new.decrypt(message, key, date)
+  def decrypt(message, key= rand_key, date = date_today)
+    stripped = strip_specials(message)
+    decrypted_array = scramble_array(stripped, key, date, "de")
+    decryption = add_back_specials(message, decrypted_array)
+    {
+      decryption: decryption.join,
+      key: key,
+      date: date
+    }
   end
 
   def character_set

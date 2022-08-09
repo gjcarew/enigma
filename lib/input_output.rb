@@ -1,5 +1,4 @@
-require_relative 'encryption'
-require_relative 'decryption'
+require_relative 'enigma'
 require_relative 'genericable'
 
 class InputOutput
@@ -17,13 +16,14 @@ class InputOutput
     check_key_and_date
     message = read_message(@args[0])
     if what_to_do == "encrypt"
-      @enigma = Encryption.new.encrypt(message, @key, @date)
+      @enigma = Enigma.new.encrypt(message, @key, @date)
       write(@enigma[:encryption])
     elsif what_to_do == "decrypt"
-      @enigma = Decryption.new.decrypt(message, @key, @date)
+      @enigma = Enigma.new.decrypt(message, @key, @date)
       write(@enigma[:decryption])
     else
       puts "Argument error"
+      return "argument error"
     end
     @enigma
   end
@@ -48,14 +48,6 @@ class InputOutput
         @date = @args[2]
       end
     end
-  end
-
-  def rand_key
-    rand(99999).to_s.rjust(5, '0')
-  end
-
-  def date_today
-    Date.today.strftime("%d%m%y")
   end
 
 end
